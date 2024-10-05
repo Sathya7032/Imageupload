@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Image Gallery</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Image Gallery</h1>
+        
+        <form method="GET" class="mb-4">
+            <div class="form-group">
+                <label for="category">Select a Category:</label>
+                <select name="category" id="category" class="form-control" onchange="this.form.submit()">
+                    <option value="">-- Select a Category --</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}" {% if category.id|stringformat:"s" == selected_category %}selected{% endif %}>{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+
+        <div class="row">
+            {% for image in images %}
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="{{ image.image.url }}" class="card-img-top" alt="{{ image.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ image.name }}</h5>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p>No images available for this category.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
